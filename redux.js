@@ -1,5 +1,5 @@
 export function createStore(
-  reducer, 
+  reducer,
   initialState = reducer(undefined, {}),
 ) {
   let callbacks = new Set();
@@ -8,7 +8,7 @@ export function createStore(
   return {
     dispatch(action) {
       state = reducer(state, action);
-  
+
       callbacks.forEach(callback => callback());
     },
     subscribe(callback) {
@@ -34,4 +34,41 @@ export function combineReducers(reducers) {
 
     return newState;
   }
+}
+
+export function createSlice({ 
+  initialState,
+  name,
+  reducers
+}) {
+  const actions = {};
+
+  Object.keys(reducers).forEach(key => {
+    if (reducers[key].length === 2) {
+      actions[key] = payload => ({
+        type: `${name}/${key}`,
+        payload,
+      });
+    } else {
+      actions[key] = () => ({
+        type: `${name}/${key}`,
+      });
+    }
+  });
+
+  function reducer(
+    state = initialState,
+    action
+  ) {
+    const key = action.type
+      ? action.type.replace(`${name}/`, '')
+      : '';
+    const f = reducers[key];
+
+    return f
+      ? f(state, action.payload)
+      : state;
+  }
+
+  return { reducer, actions };
 }
