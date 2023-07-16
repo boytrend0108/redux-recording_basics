@@ -1,4 +1,4 @@
-import { createStore } from './redux.js';
 import { reducer } from './amount.js';
+import { createStore } from '../redux.js';
 
-export const store = createStore(reducer, 100);
+export const store = createStore(reducer);

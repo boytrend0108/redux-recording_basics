@@ -1,6 +1,6 @@
 export function createStore(
   reducer, 
-  initialState,
+  initialState = reducer(undefined, {}),
 ) {
   let callbacks = new Set();
   let state = initialState;
@@ -13,6 +13,10 @@ export function createStore(
     },
     subscribe(callback) {
       callbacks.add(callback);
+
+      return () => {
+        callbacks.delete(callback);
+      };
     },
     getState() {
       return state;

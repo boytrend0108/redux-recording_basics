@@ -1,4 +1,4 @@
-export function reducer(amount, action) {
+export function reducer(amount = 100, action) {
   switch (action.type) {
     case 'add':
       return amount + action.payload;
