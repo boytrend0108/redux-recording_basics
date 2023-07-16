@@ -1,3 +1,4 @@
+import { actions } from './store/amount.js';
 import { store } from './store/index.js';
 
 const { subscribe, getState, dispatch } = store;
@@ -10,9 +11,10 @@ const unsubscribe = subscribe(() => {
   console.log(amount);
 });
 
-dispatch({ type: 'take', payload: 50 });
+dispatch(actions.add(50));
+dispatch(actions.add(10));
+dispatch(actions.take(10));
+dispatch(actions.take(40));
+dispatch(actions.clear());
+
 unsubscribe();
-dispatch({ type: 'take', payload: 10 });
-dispatch({ type: 'clear' });
-dispatch({ type: 'add', payload: 10 });
-dispatch({ type: 'add', payload: 50 });
