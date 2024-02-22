@@ -1,43 +1,8 @@
-function amountReducer(amount, action) {
-  switch (action.type) {
-    case "add":
-      return amount + action.payload;
+import { store } from "./store/index.js";
 
-    case "take":
-      return amount - action.payload;
+const { dispatch, subscribe, getState } = store;
 
-    case "clear":
-      return 0;
-
-    default:
-      return amount;
-  }
-}
-
-function createStore(reducer, initialState) {
-  const callbacks = [];
-  let state = initialState;
-
-  return {
-    dispatch(action) {
-      state = reducer(state, action);
-
-      callbacks.forEach((callback) => callback());
-    },
-
-    subscribe(callback) {
-      callbacks.push(callback);
-    },
-
-    getState() {
-      return state;
-    },
-  };
-}
-
-const { dispatch, subscribe, getState } = createStore(amountReducer, 100);
-
-subscribe(() => {
+const unsubscribe = subscribe(() => {
   const amount = getState();
   console.log(amount);
 });
@@ -49,5 +14,6 @@ dispatch({ type: "add", payload: 100 });
 dispatch({ type: "add", payload: 50 });
 dispatch({ type: "add", payload: 50 });
 dispatch({ type: "add", payload: 50 });
+unsubscribe();
 dispatch({ type: "take", payload: 105 });
 dispatch({ type: "clear" });
