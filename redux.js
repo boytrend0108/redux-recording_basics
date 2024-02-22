@@ -25,3 +25,15 @@ export function createStore(
     },
   };
 }
+
+export function combineReducers(reducers) {
+  return (state = {}, action) => {
+    const newState = {};
+
+    for (const [key, reducer] of Object.entries(reducers)) {
+      newState[key] = reducer(state[key], action);
+    }
+
+    return newState;
+  }
+}

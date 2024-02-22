@@ -1,18 +1,13 @@
-import { actions } from "./store/amount.js";
 import { store } from "./store/index.js";
+import { actions as goodsActions } from "./store/goods.js";
+import { actions as amountActions } from "./store/amount.js";
 
 const { dispatch, subscribe, getState } = store;
 
 const unsubscribe = subscribe(() => {
-  const amount = getState();
-  console.log(amount);
+  const state = getState();
+  console.log(state);
 });
 
-dispatch(actions.add(50));
-dispatch(actions.add(150));
-dispatch(actions.take(25));
-dispatch(actions.clear());
-dispatch(actions.add(100));
-unsubscribe();
-dispatch(actions.add(15));
-dispatch(actions.take(20));
+dispatch(amountActions.add(50));
+dispatch(goodsActions.add(1000));

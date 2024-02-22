@@ -1,4 +1,9 @@
-import { reducer } from './amount.js';
-import { createStore } from '../redux.js';
+import { reducer as amountReducer } from './amount.js';
+import { reducer as goodsReducer } from './goods.js';
+import { combineReducers, createStore } from '../redux.js';
 
-export const store  = createStore(reducer);
+const rootReducer = combineReducers({
+  amount: amountReducer,
+  goods: goodsReducer,
+});
+export const store  = createStore(rootReducer);
